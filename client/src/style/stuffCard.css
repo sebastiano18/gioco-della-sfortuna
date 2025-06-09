@@ -1,0 +1,14 @@
+#sfondo-carta{
+    background-color: #DDEAD0;   
+}
+
+#sfondo-testo{
+    background-color: #FFF2E2;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px #888;
+    color: #4B2E2E;
+}
+
+#sfondo-img{
+    border: 2px solid sienna;
+}
