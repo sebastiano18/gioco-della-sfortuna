@@ -11,7 +11,7 @@ function HomePage(props){
             </Row>
             <Row>
                 <Col md={10} className="mt-3 mx-auto" as='p'>
-                    In questo gioco sfiderai il computer per raccogliere 6 carte, ognuna con una situazione orribile diversa.
+                    In questo gioco sfiderai il computer per raccogliere 6 carte ognuna con una situazione orribile diversa, ma riguardante sempre la vita universitaria.
                     Ogni carta ha un'immagine, un nome ed un “indice di sfortuna” da 1 a 100 (più alto = più terribile).
                     Ma c'è un trucco: dovrai indovinare quanto è grave la nuova situazione, confrontandola con quelle che hai già in mano!
                     All'inizio riceverai 3 carte casuali dal computer e, ad ogni round, ti verrà mostrata una nuova situazione (senza sapere il suo indice di sfortuna).
