@@ -7,7 +7,7 @@ function StuffCard(props){
             <Col id="sfondo-carta">
                 <Row>
                     <Col md={7} className="mt-2 mx-auto">
-                        <Image id="sfondo-img" src={`${props.image}`} thumbnail />
+                        <Image id="sfondo-img" src={`http://localhost:3001/${props.image}`} thumbnail />
                     </Col>
                 </Row>
 
