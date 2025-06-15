@@ -23,7 +23,7 @@ function HomePage(props){
                     Che aspetti? Buon divertimento!
                 </Col>
             </Row>
-            {props.loggedIn ? 
+            {props.loggedIn ?
                 <Row>
                     <Col md={2} className="mt-5 mx-auto text-center">
                         <Link className="btn btn-primary btn-lg" to="/partita">Avvia Partita</Link>

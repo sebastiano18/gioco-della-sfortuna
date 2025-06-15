@@ -12,7 +12,7 @@ function StuffCard(props){
                 </Row>
 
                 <Row>
-                    <Col as="p" className="mb-1 text-center">
+                    <Col as="strong" className="mb-1 text-center">
                         Indice: {props.index ? `${props.index}` : `?`}
                     </Col>
                 </Row>

@@ -11,4 +11,7 @@
 
 #sfondo-img{
     border: 2px solid sienna;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
 }
