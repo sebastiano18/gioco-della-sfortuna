@@ -1,13 +1,18 @@
 import { Button, Modal} from 'react-bootstrap';
-import { useNavigate, Link } from 'react-router';
+import { useNavigate } from 'react-router';
 
 function AfterEachRoundModal(props) {
   const navigate = useNavigate();
 
 
-  const newRound = () => {
+  const nextRound = () => {
     props.onHide();
     navigate("/partita");
+  }
+
+  const endMatch = () => {
+    props.onHide();
+    navigate("/partita/riepilogo");
   }
 
   return (
@@ -40,9 +45,9 @@ function AfterEachRoundModal(props) {
     </Modal.Header>
     <Modal.Footer className="d-flex justify-content-center">
         {props.ultimoRound ?
-          <Link to="/summary" className="btn btn-primary btn-lg">Termina Partita</Link>
+          <Button className="btn-lg" variant="primary" onClick={endMatch}>Termina Partita</Button>
         :
-          <Button className="btn-lg" variant="primary" onClick={newRound}>Prossimo Round</Button>
+          <Button className="btn-lg" variant="primary" onClick={nextRound}>Prossimo Round</Button>
         }
     </Modal.Footer>
     </Modal>
