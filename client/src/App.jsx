@@ -8,6 +8,7 @@ import API from "./API/API.mjs";
 import NotLoggedMatch from "./components/NotLoggedMatch";
 import MatchSummary from "./components/MatchSummary";
 import LoggedMatch from "./components/LoggedMatch";
+import UserPage from "./components/UserPage";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -61,13 +62,19 @@ function App() {
         <Route path="/" element={ <HomePage loggedIn={loggedIn} /> }/>
         <Route path="/login" element={ loggedIn ? <Navigate replace to='/' /> : <LoginForm handleLogin={handleLogin} /> } />
         
-        {/*<Route path="partita" element={<NotLoggedMatch timerDuration={10} loggedIn={loggedIn} deckCards={deckCards} setDeckCards={setDeckCards} />} />*/}
+        {loggedIn ? (
+          <>
+          <Route path="/partita" element={<LoggedMatch timerDuration={30} loggedIn={loggedIn} deckCards={deckCards}
+          setDeckCards={setDeckCards} match={match} setMatch={setMatch} nRound={nRound} setnRound={setnRound} user={user} 
+          unknownIndexCards={unknownIndexCards} setUnknownIndexCards={setUnknownIndexCards} />} />
 
-        <Route path="/partita" element={<LoggedMatch timerDuration={30} loggedIn={loggedIn} deckCards={deckCards}
-        setDeckCards={setDeckCards} match={match} setMatch={setMatch} nRound={nRound} setnRound={setnRound} user={user} 
-        unknownIndexCards={unknownIndexCards} setUnknownIndexCards={setUnknownIndexCards} />} />
+          <Route path="/cronologia" element={loggedIn && <UserPage user={user} />} />
+          </>
+        ) : (
+          <Route path="/partita" element={<NotLoggedMatch timerDuration={30} deckCards={deckCards} setDeckCards={setDeckCards} />} />
+        )}
 
-        <Route path="/partita/riepilogo" element={<MatchSummary deckCards={deckCards} />} />
+        <Route path="/partita/riepilogo" element={<MatchSummary deckCards={deckCards} setMatch={setMatch} />} />
       </Route>
     </Routes>
   )

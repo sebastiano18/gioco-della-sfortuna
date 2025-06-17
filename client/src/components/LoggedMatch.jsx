@@ -6,7 +6,6 @@ import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, useDra
 import API from "../API/API.mjs";
 import AfterEachRoundModal from "./AfterEachRoundModal";
 import { checkIfGuessed } from "../utils/utils.mjs";
-import { useNavigate } from "react-router";
 import { Match } from "../models/gsModels.mjs";
 import dayjs from "dayjs";
 
@@ -89,7 +88,6 @@ function LoggedMatch(props){
     const [ultimoRound, setUltimoRound] = useState(false);
     const [vite, setVite] = useState(3);
 
-    const navigate = useNavigate();
 
 
     //stato per il modal di fine round
@@ -122,7 +120,7 @@ function LoggedMatch(props){
         else if(deckCards.length < 6 && props.nRound < 5){
             props.setnRound(props.nRound + 1);
             setTimerStatus(true);
-            //setTime(30);
+            setTime(30);
         }
         else{  //in caso di vittoria
             const esito = deckCards.length === 6 ? 1 : 0;
@@ -200,10 +198,10 @@ function LoggedMatch(props){
     <>
     <Row>
         <Col md={5} as='strong' style={{ color: "red" }}>
-        Vite rimaste: {`${vite}`}
+            Vite rimaste: {`${vite}`}
         </Col>
         <Col as='strong' style={{ color: "red" }} className="ms-5">
-        Tempo restante: {`${time}`}s
+            Tempo restante: {`${time}`}s
         </Col>
     </Row>
 

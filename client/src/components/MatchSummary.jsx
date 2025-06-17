@@ -1,10 +1,17 @@
 import React from "react";
-import {Row, Col} from "react-bootstrap";
+import {Row, Col, Button} from "react-bootstrap";
 import StuffCard from "./StuffCard";
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 
 function MatchSummary(props){
+    const navigate = useNavigate();
+
+    const newMatch = () => {
+        props.setMatch(matchPrec => ({...matchPrec, round: []}));
+        navigate("/partita");
+    }
+
     console.log("deckCards:", props.deckCards);
     return(
         <>
@@ -27,7 +34,7 @@ function MatchSummary(props){
             <>
                 <Row>
                     <Col md={2} className="mt-5 mx-auto text-center">
-                        <Link className="btn btn-primary" to="/partita">Nuova Partita</Link>
+                        <Button variant="primary" onClick={newMatch}>Nuova Partita</Button>
                     </Col>
                 </Row>
                 <Row>

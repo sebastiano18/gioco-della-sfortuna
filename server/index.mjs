@@ -1,12 +1,13 @@
 import express from 'express';
 import morgan from 'morgan';
-import { check, validationResult } from 'express-validator';
+import { check, validationResult, param } from 'express-validator';
 import cors from 'cors';
-import { getUser, getDeckCards, getUnknownIndexCards, getUnknownCardIndex, addNewMatch, addNewRound } from './dao.mjs';
-
+import { getUser, getDeckCards, getUnknownIndexCards, getUnknownCardIndex, addNewMatch, addNewRound, getUserHistoryDataDB, addCarteIniziali } from './dao.mjs';
+import dayjs from 'dayjs';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import session from 'express-session';
+import { groupAndOrderPartite } from './utils/utils.mjs';
 
 // init express
 const app = new express();
@@ -91,7 +92,15 @@ app.get('/api/partita/deckCards', async (req, res) => {
 });
 
 // POST 1 or 5 unknown index cards, at the beginning of a match
-app.post('/api/partita/unknownIndexCards', async (req, res) => {
+app.post('/api/partita/unknownIndexCards', [
+  check('excludedCardIds').isArray(),
+  check('nOfCards').isNumeric()
+], async (req, res) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()){
+    return res.status(422).json({errors: errors.array()});
+  }
+
   try {
     const { excludedCardIds, nOfCards } = req.body;
     const unknownIndexCards = await getUnknownIndexCards(excludedCardIds, nOfCards);
@@ -102,7 +111,14 @@ app.post('/api/partita/unknownIndexCards', async (req, res) => {
   }
 });
 
-app.post('/api/partita/unknownCardIndex', async (req, res) => {
+app.post('/api/partita/unknownCardIndex', [
+  check('unknownCardId').isNumeric()
+], async (req, res) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()){
+    return res.status(422).json({errors: errors.array()});
+  }
+
   try {
     const { unknownCardId } = req.body;
     const unknownCardIndex = await getUnknownCardIndex(unknownCardId);
@@ -113,14 +129,46 @@ app.post('/api/partita/unknownCardIndex', async (req, res) => {
   }
 });
 
-app.post('/api/partita/addMatch', async (req, res) => {
+app.post('/api/partita/addMatch', isLoggedIn, [
+  check('match').isObject(),
+  check('match.idUtente').isNumeric(),
+  check('match.data').custom(value => dayjs(value, 'YYYY-MM-DD HH:mm:ss', true).isValid()),
+  check('match.nCarteRaccolte').isNumeric(),
+  check('match.esito').isNumeric(),
+  check('match.idsCarteIniziali').isArray(),
+  check('match.round').isArray()
+], async (req, res) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()){
+    return res.status(422).json({errors: errors.array()});
+  }
+
   try{
-    const match = req.body;
+    const match = req.body.match;
     const idPartita = await addNewMatch(match);
-    console.log(match.round)
+    await addCarteIniziali(idPartita, match.idsCarteIniziali);
     await addNewRound(idPartita, match.round);
 
     res.status(201).end();
+  } catch(err){
+    console.error('Error adding a match:', err);
+    res.status(500).json({error: 'Internal Server Error'});
+  }
+});
+
+app.get('/api/cronologia/:idUtente', isLoggedIn,
+  param('idUtente').isNumeric(), async (req, res) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()){
+    return res.status(422).json({errors: errors.array()});
+  }
+  
+  try{
+    const idUtente = req.params.idUtente;
+    const userHistoryDataArray = await getUserHistoryDataDB(idUtente); 
+    const orderedUserHistoryDataArray = groupAndOrderPartite(userHistoryDataArray);
+    
+    res.json(orderedUserHistoryDataArray);
   } catch(err){
     res.status(500).json({error: 'Internal Server Error'});
   }

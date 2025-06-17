@@ -94,7 +94,8 @@ const addMatch = async (match) => {
   const response = await fetch(SERVER_URL + '/api/partita/addMatch', {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(match)
+    body: JSON.stringify({ match }),
+    credentials: 'include'
   });
 
   if(response.ok){
@@ -105,6 +106,20 @@ const addMatch = async (match) => {
   }
 }
 
+const getOrderedUserHistoryData = async (idUtente) => {
+  const response = await fetch(SERVER_URL + `/api/cronologia/${idUtente}`, {
+    credentials: 'include',
+  });
 
-const API = { logIn, logOut, getUserInfo, getDeckCards, getUnknownIndexCards, getUnknownCardIndex, addMatch };
+  if(response.ok){
+    const userHistoryDataOrderedByDate = await response.json();
+    return userHistoryDataOrderedByDate;
+  }
+  else{
+    throw new Error("500 Internal server error");
+  }
+}
+
+
+const API = { logIn, logOut, getUserInfo, getDeckCards, getUnknownIndexCards, getUnknownCardIndex, addMatch, getOrderedUserHistoryData };
 export default API;

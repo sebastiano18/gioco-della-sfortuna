@@ -89,9 +89,9 @@ function NotLoggedMatch(props){
 
 
     const handleRoundEnd = (correct) => {
-    setTimerStatus(false);
-    setActualRound(prec => ({...prec, conquistata: correct}));
-    setShow(true);
+        setTimerStatus(false);
+        setActualRound(prec => ({...prec, conquistata: correct}));
+        setShow(true);
     };
 
     //all'inizio di un round
@@ -102,7 +102,7 @@ function NotLoggedMatch(props){
         setDeckCards(deckCards);
 
         const unknownIndexCard = await API.getUnknownIndexCards(deckCards.map(c => c.idCarta), 1);
-        //console.log("Carta misteriosa:", unknownIndexCard[0]);
+        console.log("Carta misteriosa:", unknownIndexCard);
         setActualRound(prec => ({...prec, idCarta: unknownIndexCard[0].idCarta, nRound: 1}));
         setDraggableCard(unknownIndexCard[0]);
     }
@@ -125,12 +125,12 @@ function NotLoggedMatch(props){
         const unknownCardIndex = await API.getUnknownCardIndex(actualRound.idCarta);
 
         const correct = checkIfGuessed(draggableCard.idCarta, unknownCardIndex, newCards);
-        handleRoundEnd(correct);
         if(correct){
             newCards[insertIndex].indice = unknownCardIndex;  //solo se la carta viene vinta mostra il suo indice nel riepilogo della partita
             setDeckCards(newCards);
             setDraggableCard(null);
         }
+        handleRoundEnd(correct);
     }
     };
 
@@ -138,7 +138,7 @@ function NotLoggedMatch(props){
     <>
     <Row>
         <Col as='strong' style={{ color: "red" }} className="text-center">
-        Tempo restante: {`${time}`}s
+            Tempo restante: {`${time}`}s
         </Col>
     </Row>
 
@@ -147,10 +147,10 @@ function NotLoggedMatch(props){
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
 
             {/*carte nel mazzo del giocatore */}
-            <Row className="flex-nowrap justify-content-between align-items-center" style={{ overflowX: "auto" }}>
+            <Row className="flex-nowrap justify-content-between align-items-stretch" style={{ overflowX: "auto" }}>
             {deckCards.map((card, idx) => (
                 <React.Fragment key={card.idCarta}>
-                <Col md={2} className="d-flex justify-content-center">
+                <Col md={2} className="d-flex justify-content-center align-items-center">
                     <DropZone id={`dropzone-${idx}`} />
                 </Col>
                 <Col md={2} className="d-flex justify-content-center">
@@ -158,7 +158,7 @@ function NotLoggedMatch(props){
                 </Col>
                 </React.Fragment>
             ))}
-            <Col md={2} className="d-flex justify-content-center">
+            <Col md={2} className="d-flex justify-content-center align-items-center">
                 <DropZone id={`dropzone-${deckCards.length}`} />
             </Col>
             </Row>
@@ -174,7 +174,7 @@ function NotLoggedMatch(props){
         </DndContext>
         </Col>
     </Row>
-    <AfterEachRoundModal correct={actualRound.conquistata} show={show} onHide={() => setShow(false)} loggedIn={props.loggedIn} timeOut={timeOut} />
+    <AfterEachRoundModal correct={actualRound.conquistata} show={show} onHide={() => setShow(false)} timeOut={timeOut} ultimoRound={true} />
     </>
     );
 }

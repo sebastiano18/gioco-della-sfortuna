@@ -28,7 +28,7 @@ function NavHeader(props) {
                   Home <i className="bi bi-house-door ms-2"></i>
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/cronologia">
-                  Cronologia <i className="bi bi-clock-history ms-2"></i>
+                  Pagina profilo <i className="bi bi-person ms-2"></i>
                 </NavDropdown.Item>
                 <NavDropdown.Item className="text-danger" onClick={props.handleLogout}>
                   Esci <i className="bi bi-door-open ms-2"></i>
