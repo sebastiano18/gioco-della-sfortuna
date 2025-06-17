@@ -68,7 +68,7 @@ app.get('/api/sessions/current', (req, res) => {
     res.status(401).json({error: 'Not authenticated'});
 });
 
-// DELETE /api/session/current
+// DELETE /api/sessions/current
 app.delete('/api/sessions/current', (req, res) => {
   req.logout(() => {
     res.end();
@@ -93,8 +93,8 @@ app.get('/api/partita/deckCards', async (req, res) => {
 
 // POST 1 or 5 unknown index cards, at the beginning of a match
 app.post('/api/partita/unknownIndexCards', [
-  check('excludedCardIds').isArray(),
-  check('nOfCards').isNumeric()
+  check('excludedCardIds').exists().isArray(),
+  check('nOfCards').exists().isNumeric()
 ], async (req, res) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()){
@@ -112,7 +112,7 @@ app.post('/api/partita/unknownIndexCards', [
 });
 
 app.post('/api/partita/unknownCardIndex', [
-  check('unknownCardId').isNumeric()
+  check('unknownCardId').exists().isNumeric()
 ], async (req, res) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()){
@@ -130,13 +130,13 @@ app.post('/api/partita/unknownCardIndex', [
 });
 
 app.post('/api/partita/addMatch', isLoggedIn, [
-  check('match').isObject(),
-  check('match.idUtente').isNumeric(),
-  check('match.data').custom(value => dayjs(value, 'YYYY-MM-DD HH:mm:ss', true).isValid()),
-  check('match.nCarteRaccolte').isNumeric(),
-  check('match.esito').isNumeric(),
-  check('match.idsCarteIniziali').isArray(),
-  check('match.round').isArray()
+  check('match').exists().isObject(),
+  check('match.idUtente').exists().isNumeric(),
+  check('match.data').exists().custom(value => dayjs(value, 'YYYY-MM-DD HH:mm:ss', true).isValid()),
+  check('match.nCarteRaccolte').exists().isNumeric(),
+  check('match.esito').exists().isNumeric(),
+  check('match.idsCarteIniziali').exists().isArray(),
+  check('match.round').exists().isArray()
 ], async (req, res) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()){

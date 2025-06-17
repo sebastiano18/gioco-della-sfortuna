@@ -39,8 +39,12 @@ const logOut = async() => {
     method: 'DELETE',
     credentials: 'include'
   });
-  if (response.ok)
+  if (response.ok){
     return null;
+  }
+  else{
+    throw new Error("500 Internal server error");
+  }
 }
 
 const getDeckCards = async () => {
