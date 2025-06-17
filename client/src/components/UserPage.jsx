@@ -41,7 +41,7 @@ function UserPage(props){
                     historyData.map((partita) => (
                         <React.Fragment key={partita.idPartita}>
                             <Row className="mb-2" id="sfondo-record-partita">
-                                <Col md={2} id="singola-colonna">
+                                <Col md={2} id="singola-colonna" className="text-center">
                                     {partita.esito ? (
                                         <p><strong>Vinta:</strong> {`${partita.nCarteRaccolte}`} carte raccolte</p>
                                     ) : (<p><strong>Persa:</strong> {`${partita.nCarteRaccolte}`} carte raccolte</p>
@@ -49,13 +49,13 @@ function UserPage(props){
                                     <p>giocata il: {partita.data}</p>
                                 </Col>
                                 <Col className="text-center" id="singola-colonna" md={4}>
-                                    <p>Nomi carte iniziali:</p>
+                                    <strong>Nomi carte iniziali:</strong>
                                     {partita.carteIniziali.map( (cartaIniziale, indx) => (
                                         <p key={indx}>{cartaIniziale.nome}</p>
                                     ))}
                                 </Col>
                                 <Col className="text-center" id="singola-colonna" md={6}>
-                                    <p>Nomi carte apparse nei round:</p>
+                                    <strong>Nomi carte apparse nei round:</strong>
                                     {partita.carteRound.map((cartaRound, indx) => (
                                         <p key={indx}>
                                             {cartaRound.nome}

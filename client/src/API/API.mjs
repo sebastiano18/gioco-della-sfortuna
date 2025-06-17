@@ -111,7 +111,7 @@ const addMatch = async (match) => {
 }
 
 const getOrderedUserHistoryData = async (idUtente) => {
-  const response = await fetch(SERVER_URL + `/api/cronologia/${idUtente}`, {
+  const response = await fetch(SERVER_URL + `/api/paginaProfilo/${idUtente}`, {
     credentials: 'include',
   });
 

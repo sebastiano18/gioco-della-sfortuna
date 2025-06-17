@@ -68,7 +68,7 @@ function App() {
           setDeckCards={setDeckCards} match={match} setMatch={setMatch} nRound={nRound} setnRound={setnRound} user={user} 
           unknownIndexCards={unknownIndexCards} setUnknownIndexCards={setUnknownIndexCards} />} />
 
-          <Route path="/cronologia" element={loggedIn && <UserPage user={user} />} />
+          <Route path="/paginaProfilo" element={loggedIn && <UserPage user={user} />} />
           </>
         ) : (
           <Route path="/partita" element={<NotLoggedMatch timerDuration={30} deckCards={deckCards} setDeckCards={setDeckCards} />} />

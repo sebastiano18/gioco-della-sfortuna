@@ -156,7 +156,7 @@ app.post('/api/partita/addMatch', isLoggedIn, [
   }
 });
 
-app.get('/api/cronologia/:idUtente', isLoggedIn,
+app.get('/api/paginaProfilo/:idUtente', isLoggedIn,
   param('idUtente').isNumeric(), async (req, res) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()){
