@@ -36,7 +36,7 @@ function UserPage(props){
         </Row>
 
         <Row className="justify-content-center">
-            <Col md={10} style={{ maxHeight: '400px', overflowY: 'auto' }}>
+            <Col md={10} style={{ maxHeight: '450px', overflowY: 'auto' }}>
                 {
                     historyData.map((partita) => (
                         <React.Fragment key={partita.idPartita}>
@@ -61,9 +61,9 @@ function UserPage(props){
                                             {cartaRound.nome}
                                             {
                                                 cartaRound.conquistata ? (
-                                                  <span> conquistata al round {cartaRound.nRound}</span>
+                                                  <strong> Conquistata al round {cartaRound.nRound}</strong>
                                                 ) : (
-                                                  <span> persa al round {cartaRound.nRound}</span>
+                                                  <strong> Persa al round {cartaRound.nRound}</strong>
                                                 )
                                             }
                                         </p>
