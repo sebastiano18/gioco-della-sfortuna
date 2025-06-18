@@ -32,10 +32,10 @@ function LoginForm(props){
 
                         <Form.Group controlId='password' className='mb-3'>
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type='password' name='password' required={true} minLength={6}></Form.Control>
+                            <Form.Control type='password' name='password' required={true} minLength={6} maxLength={24}></Form.Control>
                         </Form.Group>
 
-                        {state.error && <p className="text-danger">{state.error}</p>} {/** se l'utente non rispetta i vincoli*/}
+                        {state.error && <p className="text-danger">{state.error}</p>} {/* se l'utente non rispetta i vincoli*/}
 
                         <Form.Group className="mb-3 text-center">
                             <Button variant="primary" type='submit' disabled={isPending}>Accedi</Button>

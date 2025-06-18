@@ -21,7 +21,7 @@ function App() {
   useEffect(() => { //All'avvio dell'app
     const checkAuth = async () => {
       try{
-        const user = await API.getUserInfo();  // we have the user info here
+        const user = await API.getUserInfo();  
         setLoggedIn(true);
         setUser(user);
       }catch(e){
@@ -40,6 +40,7 @@ function App() {
       setUser(user);
       setTimeout(() => setMessage(''), 4000); // message disappears after 4 seconds
     } catch(err) {
+      
       setMessage({msg: err, type: 'danger'});
       setTimeout(() => setMessage(''), 4000); // error message disappears after 4 seconds
     }

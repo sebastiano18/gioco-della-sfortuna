@@ -152,29 +152,38 @@ export const addNewMatch = (match) => {
     });
 }
 
-export const getMatchDate = (idMatch) => {
+export const addCarteIniziali = (idPartita, idsCarteIniziali) => {
     return new Promise((resolve, reject) => {
-        const sql = `SELECT data
-                    FROM PARTITA
-                    WHERE idPartita = ?`;
-        db.get(sql, [idMatch], (err, row) => {
-            if(err){
+        const sql = `INSERT INTO ROUND (idPartita, idCarta)
+                    VALUES (?, ?)`;
+        
+        const stmt = db.prepare(sql);
+        for (const idCartaIniziale of idsCarteIniziali) {
+            stmt.run([idPartita, idCartaIniziale], (err) => {
+                if (err) {
+                    reject(err);
+                }
+            });
+        }
+        stmt.finalize((err) => {
+            if (err) {
                 reject(err);
-            }
-            else{
-                resolve(row);
+            } else {
+                resolve(true);
             }
         });
     });
 }
 
-export const getUserHistoryData = (idUtente) => {
+export const getUserHistoryDataDB = (idUtente) => {
     return new Promise((resolve, reject) => {
-        const sql = `SELECT CARTA.nome, PARTITA.data, PARTITA.nCarteRaccolte, ROUND.nRound, ROUND.conquistata
-                    FROM PARTITA
-                    INNER JOIN ROUND ON PARTITA.idPartita = ROUND.idPartita
-                    INNER JOIN CARTA ON CARTA.idCarta = ROUND.idCarta
-                    WHERE PARTITA.idUtente = ?`;
+        const sql = `SELECT P.idPartita, P.data, P.nCarteRaccolte, P.esito,
+                    C.nome,
+                    R.nRound, R.conquistata
+                    FROM PARTITA P
+                    LEFT JOIN ROUND R ON P.idPartita = R.idPartita
+                    LEFT JOIN CARTA C ON R.idCarta = C.idCarta
+                    WHERE P.idUtente = ?`;
         db.all(sql, [idUtente], (err, rows) => {
             if(err){
                 reject(err);

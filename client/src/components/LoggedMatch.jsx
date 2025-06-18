@@ -129,7 +129,7 @@ function LoggedMatch(props){
             const match = new Match(props.user.id, dayjs().format('YYYY-MM-DD HH:mm:ss'), deckCards.length, esito, props.match.idsCarteIniziali, props.match.round);
             API.addMatch(match);
         }
-        
+        setTimeOut(false)
         setShow(false)
     }
 
