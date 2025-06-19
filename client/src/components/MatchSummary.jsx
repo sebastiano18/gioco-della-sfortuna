@@ -12,7 +12,6 @@ function MatchSummary(props){
         navigate("/partita");
     }
 
-    console.log("deckCards:", props.deckCards);
     return(
         <>
         <Row className="mb-5 justify-content-center">

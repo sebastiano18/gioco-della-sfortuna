@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Routes, Route, Navigate } from "react-router";
+import { Routes, Route, Navigate, useNavigate } from "react-router";
 import DefaultLayout from "./components/DefaultLayout";
 import HomePage from "./components/HomePage";
 import { useState, useEffect } from "react";
@@ -11,6 +11,7 @@ import LoggedMatch from "./components/LoggedMatch";
 import UserPage from "./components/UserPage";
 
 function App() {
+  const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [message, setMessage] = useState('');
@@ -40,8 +41,11 @@ function App() {
       setUser(user);
       setTimeout(() => setMessage(''), 4000); // message disappears after 4 seconds
     } catch(err) {
-      
-      setMessage({msg: err, type: 'danger'});
+      if (err === "Unauthorized") {
+        setMessage({msg: "Credenziali non valide.", type: 'danger'});
+      } else {
+        setMessage({msg: err, type: 'danger'});
+      }
       setTimeout(() => setMessage(''), 4000); // error message disappears after 4 seconds
     }
   }
@@ -51,6 +55,7 @@ function App() {
     setLoggedIn(false);
     // clean up everything
     setMessage('');
+    navigate('/');
   };
   
   const [deckCards, setDeckCards] = useState([]);

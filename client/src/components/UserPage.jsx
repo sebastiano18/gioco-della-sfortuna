@@ -10,10 +10,8 @@ function UserPage(props){
 
     useEffect(() => {
     const getHistoryData = async () => {
-        console.log(props.user.id)
         const orderedHistoryDataArray = await API.getOrderedUserHistoryData(props.user.id);
         
-        console.log(orderedHistoryDataArray);
         setHistoryData(orderedHistoryDataArray);
     }
 

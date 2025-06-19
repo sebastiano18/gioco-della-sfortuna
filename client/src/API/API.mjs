@@ -94,7 +94,6 @@ const getUnknownCardIndex = async (unknownCardId) => {
 }
 
 const addMatch = async (match) => {
-  console.log("ciaooooooooooooooooooooo", match);
   const response = await fetch(SERVER_URL + '/api/partita/addMatch', {
     method: "POST",
     headers: { "Content-Type": "application/json" },

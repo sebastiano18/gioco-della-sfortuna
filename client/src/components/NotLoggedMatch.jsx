@@ -102,7 +102,6 @@ function NotLoggedMatch(props){
         setDeckCards(deckCards);
 
         const unknownIndexCard = await API.getUnknownIndexCards(deckCards.map(c => c.idCarta), 1);
-        console.log("Carta misteriosa:", unknownIndexCard);
         setActualRound(prec => ({...prec, idCarta: unknownIndexCard[0].idCarta, nRound: 1}));
         setDraggableCard(unknownIndexCard[0]);
     }

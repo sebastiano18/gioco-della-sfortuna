@@ -141,7 +141,6 @@ function LoggedMatch(props){
         props.setMatch(matchPrec => ({...matchPrec, idUtente: props.user.id, idsCarteIniziali: deckCards.map(c => c.idCarta)}))   //aggiungi gli ids delle carte iniziali di quella partita
 
         const unknownIndexCardArray = await API.getUnknownIndexCards(deckCards.map(c => c.idCarta), 5);
-        console.log("Carte misteriose:", unknownIndexCardArray);
         props.setUnknownIndexCards(unknownIndexCardArray);  //perché non voglio perdere l'array tra un round e l'altro
         
 
