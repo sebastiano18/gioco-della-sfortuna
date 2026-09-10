@@ -1,6 +1,43 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/uNTgnFHD)
-# Exam #1: "Gioco della Sfortuna"
-## Student: s348161 IRA SEBASTIANO 
+## "Gioco della Sfortuna"
+
+## How to run
+
+### Prerequisiti
+
+- Node.js e npm installati.
+- Un terminale per il server e un secondo terminale per il client.
+
+### Installazione
+
+Dalla cartella principale del progetto, installare le dipendenze di entrambe le applicazioni:
+
+```bash
+cd server
+npm install
+
+cd ../client
+npm install
+```
+
+### Avvio
+
+Avviare il server in un primo terminale:
+
+```bash
+cd server
+node index.mjs
+```
+
+Il server sarà disponibile all'indirizzo `http://localhost:3001`.
+
+In un secondo terminale, avviare il client:
+
+```bash
+cd client
+npm run dev
+```
+
+Aprire quindi `http://localhost:5173` nel browser. Il database SQLite viene gestito automaticamente dal server.
 
 ## React Client Application Routes
 
